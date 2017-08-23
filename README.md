@@ -44,7 +44,7 @@ Different models can be grouped in one category (see `./Example/melspec_1state_2
 
 2. Run the following command
 
-		./Compile ./Example/melspec_1state_256pdf/model.mmf ./Example/melspec_1state_256pdf/dict.txt ./Example/melspec_1state_256pdf/model`
+		./Compile ./Example/melspec_1state_256pdf/model.mmf ./Example/melspec_1state_256pdf/dict.txt ./Example/melspec_1state_256pdf/model
 
 It will create a `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx` for you. The first three files are FST, input and output symbols forming only the recognition network (see file `./Example/melspec_1state_256pdf/model.pdf` for the graphical representation of the network). The last two files are used by the system.
 
@@ -54,8 +54,6 @@ Citation
 If you use data or code, please cite the following:
 
 Lojka, M., Pleva, M., Kiktová, E., Juhár J., Čižmár A.", Efficient acoustic detector of gunshots and glass breaking, Multimedia Tools and Applications, 2016, https://doi.org/10.1007/s11042-015-2903-z
-
-.. code-block:: none
 
 	@Article{Lojka2016,
 	 author="Lojka, Martin and Pleva, Mat{\'u}{\v{s}} and Kiktov{\'a}, Eva and Juh{\'a}r, Jozef and {\v{C}}i{\v{z}}m{\'a}r, Anton",
