@@ -1,0 +1,6 @@
+glass	0	glass
+shot	0	shot
+background	0	background_hokej
+background	0	background_fest
+background	0	background_traffic
+background	0	background_divadlo
