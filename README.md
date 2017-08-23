@@ -37,11 +37,13 @@ Acoustic model preparation
 Currently HTK models are supported. Please follow the steps in order to create the recognition network:
 
 1. Create dictionary file in the form
+		
 		output_label_name	probability_of_the_event	model_name_of_the_event
 	
 Different models can be grouped in one category (see `./Example/melspec_1state_256pdf/dict.txt`). For example the background models trained in different conditions into one background output name. If there is no special probability of any event, zero value can be used to make each of the events equal probable.
 
 2. Run the following command
+
 		./Compile ./Example/melspec_1state_256pdf/model.mmf ./Example/melspec_1state_256pdf/dict.txt ./Example/melspec_1state_256pdf/model`
 
 It will create a `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx` for you. The first three files are FST, input and output symbols forming only the recognition network (see file `./Example/melspec_1state_256pdf/model.pdf` for the graphical representation of the network). The last two files are used by the system.
