@@ -2,7 +2,7 @@
 EAR-TUKE
 ========
 
-System for detection and acoustic events like gushots and glass breaking.
+Acoustic event detection system of gunshots and glass breaking.
 
 Licence
 --------
@@ -16,37 +16,43 @@ make
 Running the example
 --------------------
 
-- Offline example: 
-The detection results are displayed on the end of the recording processing.
+- Off-line example: 
+The detection results will be displayed at the end of the recording processing.
 
 		./Ear ./Example/example.cfg ./Example/example.wav
 
-- Online example: 
-For online example of the detection, please change following line in the `./Example/example.cfg` file to enable online mode and run the above command line again. The results should be displayed as they are detected in the input file
+- On-line example: 
+The on-line detection can be enabled by changing following line in the `./Example/example.cfg`.
 
 		ONLINE T
 
-- Online live example: 
-For online live example (reading data from microphone) run the system without any input file. Please note that in order to see the events the online mode needs to be set in `./Example/example.cfg`.
+Run the previous command-line again. The results will be displayed right as the event appears in the input recording.
+
+- On-line live example:
+To run the example using a microphone input, run the command-line without any input file. To see the results of detection, the online mode needs to be enabled as in the previous case.
 
 		./Ear ./Example/example.cfg
 
 Acoustic model preparation
 --------------------------
 
-Currently HTK models are supported. Please follow the steps in order to create the recognition network:
+Currently only HTK models are supported. The model needs to be converted to binary format that also contain recognition network using following steps:
 
 1. Create dictionary file in the form
 		
 		output_label_name	probability_of_the_event	model_name_of_the_event
 	
-Different models can be grouped in one category (see `./Example/melspec_1state_256pdf/dict.txt`). For example the background models trained in different conditions into one background output name. If there is no special probability of any event, zero value can be used to make each of the events equal probable.
+The `output_label_name` is used as output in case of the event detection that is modeled by `model_name_of_the_event`. There can be more than one acoustic model under the same output label (see `./Example/melspec_1state_256pdf/dict.txt`). For example, there can be more background models trained on different conditions, but grouped in one category and outputted under the same output label.
 
 2. Run the following command
 
 		./Compile ./Example/melspec_1state_256pdf/model.mmf ./Example/melspec_1state_256pdf/dict.txt ./Example/melspec_1state_256pdf/model
 
-It will create a `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx` for you. The first three files are FST, input and output symbols forming only the recognition network (see file `./Example/melspec_1state_256pdf/model.pdf` for the graphical representation of the network). The last two files are used by the system.
+It will create files `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx`. The first three files are not used by the system, they just debugging output of the recognition network (the transducer, input and output symbols). For graphical representation see `./Example/melspec_1state_256pdf/model.pdf`. The important files are the last two of them. `model.bin` contains network definition and the acoustic model as well. As the system is working with id numbers istead of the event names, the `model.idx` contains the mapping between the two.
+
+3. Change the configuration file
+
+Update the configuration file to read the converted acoustic model with recognition network and the mapping file (the `MODEL_BIN_FILE` and `MODEL_IDX_FILE`). When the online detection mode is desirable, the parameter `BCG_IDX` needs to be changed to match the number of the background model in the mapping file.
 
 Citation
 ---------
