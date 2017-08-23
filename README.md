@@ -16,17 +16,17 @@ make
 Running the example
 --------------------
 
-- offline example
+- Offline example: 
 The detection results are displayed on the end of the recording processing.
 
 		./Ear ./Example/example.cfg ./Example/example.wav
 
-- online example
+- Online example: 
 For online example of the detection, please change following line in the `./Example/example.cfg` file to enable online mode and run the above command line again. The results should be displayed as they are detected in the input file
 
 		ONLINE T
 
-- online live example
+- Online live example: 
 For online live example (reading data from microphone) run the system without any input file. Please note that in order to see the events the online mode needs to be set in `./Example/example.cfg`.
 
 		./Ear ./Example/example.cfg
