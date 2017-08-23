@@ -36,7 +36,7 @@ To run the example using a microphone input, run the command-line without any in
 Acoustic model preparation
 --------------------------
 
-Currently only HTK models are supported. The model needs to be converted to binary format that also contain recognition network using following steps:
+Currently only HTK models are supported. The model needs to be converted to binary form that also contain recognition network using following steps:
 
 1. Create dictionary file in the form
 		
