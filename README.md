@@ -48,7 +48,7 @@ The `output_label_name` is used as output in case of the event detection that is
 
 		./Compile ./Example/melspec_1state_256pdf/model.mmf ./Example/melspec_1state_256pdf/dict.txt ./Example/melspec_1state_256pdf/model
 
-It will create files `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx`. The first three files are not used by the system, they just debugging output of the recognition network (the transducer, input and output symbols). For graphical representation see `./Example/melspec_1state_256pdf/model.pdf`. The important files are the last two of them. `model.bin` contains network definition and the acoustic model as well. As the system is working with id numbers istead of the event names, the `model.idx` contains the mapping between the two.
+It will create files `model.fst`, `model.isym`, `model.osym`, `model.bin` , and `model.idx`. The first three files are not used by the system, they are just debugging output of the recognition network (the transducer, input and output symbols). For graphical representation see `./Example/melspec_1state_256pdf/model.pdf`. The important files are the last two of them. `model.bin` contains network definition and the acoustic model as well. As the system is working with id numbers istead of the event names, the `model.idx` contains the mapping between the two.
 
 3. Change the configuration file
 
