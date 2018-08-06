@@ -121,7 +121,8 @@ void CFourier::getData(CDataContainer &_pData)
 		wim = b2;
 	}
 
-	for(i=2, j=1; i<_pData.size(); i+=2, j++) _pData[j] = sqrt((_pData[i] * _pData[i]) + (_pData[i+1] * _pData[i+1]));
+	for(i=2, j=1; i<_pData.size(); i+=2, j++)
+		_pData[j] = sqrt((_pData[i] * _pData[i]) + (_pData[i+1] * _pData[i+1]));
 
 	_pData.size() /= 2;
 	_pData.freq() /= 2;
