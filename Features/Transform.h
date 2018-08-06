@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ namespace Ear
 		virtual ~CFourier();
 
 	private:
-		unsigned int m_iSize, m_iPower;
+		unsigned int m_iSize, m_iPower, m_iFFT;
 
 	public:
 		void getData(CDataContainer &_pData);
