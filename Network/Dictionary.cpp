@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -55,7 +55,7 @@ int CDictionary::loadFromFile(char *_szFileName)
 	map<char*, unsigned int, cmp_str> mapWord2Id;
 	map<char*, unsigned int, cmp_str>::iterator it;
 
-	if(m_file.open(_szFileName, m_file.READ, "\t") != EAR_SUCCESS) return EAR_FAIL;
+	if(m_file.open(_szFileName, m_file.READ, " 	") != EAR_SUCCESS) return EAR_FAIL;
 
 	buf = m_file.read();
 
@@ -74,6 +74,7 @@ int CDictionary::loadFromFile(char *_szFileName)
 
 		buf = m_file.read();
 		Item->prob = atof(buf);
+
 
 		buf = m_file.read();
 		Item->models = cloneString(buf);
