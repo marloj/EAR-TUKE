@@ -40,7 +40,7 @@ Currently only HTK models are supported. The model needs to be converted to bina
 
 1. Create dictionary file in the form
 		
-		output_label_name	probability_of_the_event	model_name_of_the_event
+		output_label_name probability_of_the_event model_name_of_the_event
 	
 The `output_label_name` is used as output in case of the event detection that is modeled by `model_name_of_the_event`. There can be more than one acoustic model under the same output label (see `./Example/melspec_1state_256pdf/dict.txt`). For example, there can be more background models trained on different conditions, but grouped in one category and outputted under the same output label.
 
