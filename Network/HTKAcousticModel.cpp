@@ -109,6 +109,7 @@ int CHTKAcousticModel::loadModelFrom(char *_szFileName)
 	if(readHMMHeader() == EAR_FAIL){ fprintf(stderr, "Error reading HMM file header\n"); m_file.close(); return EAR_FAIL; }
 	if(readHMMInfo() == EAR_FAIL){ fprintf(stderr, "Error reading HMM file\n"); m_file.close(); return EAR_FAIL; }
 	m_file.close();
+	return EAR_SUCCESS;
 }
 
 HTK_Info *CHTKAcousticModel::getHMMInfo()

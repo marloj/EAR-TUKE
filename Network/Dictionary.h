@@ -46,10 +46,10 @@ namespace Ear
 		void add(DictItem *_item);
 		struct cmp_str
 		{
-			bool operator()(char const *a, char const *b)
-			{
-				return strcmp(a, b) < 0;
-			}
+		 	bool operator()(char const *a, char const *b) const
+		 	{
+		 		return strcmp(a, b) < 0;
+		 	}
 		};
 
 	private:
