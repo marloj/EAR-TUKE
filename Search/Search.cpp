@@ -79,7 +79,7 @@ void CSearch::reset()
 	}
 
 	memset(m_ppStack, 0, 2 * m_iStates * sizeof(CToken*));
-	token = m_pTokens->add(NULL); insert(token, START_STATE); token->iSym == EPS_SYM;
+	token = m_pTokens->add(NULL); insert(token, START_STATE); token->iSym = EPS_SYM;
 	propagateEmpty(token);
 }
 
