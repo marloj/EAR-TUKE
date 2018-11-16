@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,14 +42,14 @@ CWavSource::~CWavSource()
 
 unsigned int CWavSource::load(char *_szFileName)
 {
-    //variable for file pointer
+    /// variable for file pointer
     FILE *pf = NULL; unsigned short iT; int c;
 
-    //open wav file
+    /// open wav file
     pf = fopen(_szFileName, "rb");
     if(!pf) {/*printf("CWavSource: Error opening input file %s", _szFileName);*/ return EAR_FAIL;}
 
-    //read header
+    /// read header
     while((c = getc(pf)) != EOF)
 	{
 		if(c != 'f') continue; if((c = getc(pf)) == EOF) return EAR_FAIL;
@@ -70,7 +70,7 @@ unsigned int CWavSource::load(char *_szFileName)
 		break;
 	}
 
-	//skip to data
+	/// skip to data
 	while((c = getc(pf)) != EOF)
 	{
 		if(c != 'd') continue; if((c = getc(pf)) == EOF) return EAR_FAIL;
@@ -82,19 +82,19 @@ unsigned int CWavSource::load(char *_szFileName)
 		break;
 	}
 
-    //get data length from size of whole file
+    /// get data length from size of whole file
     unsigned int iPos = ftell(pf); fseek(pf, 0, SEEK_END);
     m_iSize = (unsigned int)ftell(pf) - iPos;
     fseek(pf, iPos, SEEK_SET);
 
-    //allocate data buffer and read all samples
+    /// allocate data buffer and read all samples
     m_psBuf = new unsigned char[m_iSize];
     fread(m_psBuf, 1, m_iSize, pf);
 
-    //close file
+    /// close file
     fclose(pf);
 
-    //compute read length for this file and reset read
+    /// compute read length for this file and reset read
     m_iReadLength = m_iSmpFreq * m_fReadTime * m_iBytesPerSmp;
     //reset();
 
@@ -103,19 +103,19 @@ unsigned int CWavSource::load(char *_szFileName)
 
 void CWavSource::getData(CDataContainer &_pData)
 {
-    //compute available data
+    /// compute available data
     unsigned int iAvail = m_iSize - m_iRead;
     if(iAvail == 0) { _pData.clear(); return; }
 
-    //compute length of data to be copied
+    /// compute length of data to be copied
     if(iAvail > m_iReadLength){ iAvail = m_iReadLength; }
     iAvail /= m_iBytesPerSmp; _pData.reserve(iAvail);
 
-    //compute start pointers
+    /// compute start pointers
     unsigned int i = 0;
     float *pDst = _pData.data(); unsigned char *pSrc = m_psBuf + m_iRead;
 
-    //transform and copy data
+    /// transform and copy data
     if(m_iBytesPerSmp == 1)
     {
 	    for(i = 0; i < iAvail; i++) { pDst[i] = ((float)pSrc[i] - 128); }

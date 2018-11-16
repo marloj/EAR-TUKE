@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -66,24 +66,25 @@ FileIO::~FileIO()
 char *FileIO::read()
 {
 	if(last == NULL) return NULL;
-	if(state == READ_STATE) {state = UNREAD_STATE; return last;}
-		
+	if(state == READ_STATE) {state = UNREAD_STATE; return last;} /// token already read
+
+  /// get next token
 	last = strtok(NULL, Toks);
-	if(last == NULL) 
+	if(last == NULL)
 	{
-		if(readLine() == EAR_FAIL) return NULL;
+		if(readLine() == EAR_FAIL) return NULL; /// new line is needed to read
 		last = strtok(readBuf, Toks);
 	}
-	
+
 	return last;
 }
 
 char *FileIO::read(const char *_szExpect)
 {
-	if(state == UNREAD_STATE) {last = read(); state = READ_STATE;}
-	if(last == NULL) {state = UNREAD_STATE; return NULL;}
-	if(strcmp(last, _szExpect) == 0) {state = UNREAD_STATE; return last;}	
-	
+	if(state == UNREAD_STATE) {last = read(); state = READ_STATE;} /// update the last token
+	if(last == NULL) {state = UNREAD_STATE; return NULL;}  /// no new token return NULL
+	if(strcmp(last, _szExpect) == 0) {state = UNREAD_STATE; return last;} /// expecting token
+
 	return NULL;
 }
 
@@ -91,27 +92,29 @@ char *FileIO::skipTo(const char *_szExpect)
 {
 	state = UNREAD_STATE;
 	if(last == NULL) last = read();
-	while(last != NULL && strcmp(_szExpect, last) != 0) {last = read();}
+	while(last != NULL && strcmp(_szExpect, last) != 0) {last = read();} /// loop until the right token is found
 	return last;
 }
-	
+
 int FileIO::readLine()
 {
 	unsigned int length = 0;
 
+  /// get whole line from file
 	if(!fgets(readBuf, MAX_BUF_LENGTH, m_pf)) return EAR_FAIL;
 
+  /// remove the new lines characters from the buffer
 	length = strlen(readBuf);
 	if(readBuf[length-1] == '\n') readBuf[length-1] = '\0';
 	if(readBuf[length-2] == '\r') readBuf[length-2] = '\0';
-	
-	return EAR_SUCCESS;	
+
+	return EAR_SUCCESS;
 }
 
 int FileIO::isOpen()
 {
 	if(m_pf != NULL) return EAR_SUCCESS;
-	
+
 	return EAR_FAIL;
 }
 
@@ -122,10 +125,10 @@ void FileIO::close()
 
 void FileIO::readyRead()
 {
-	//initialize read
+	/// initialize read
 	last = NULL;
 
-	//try to read first line and strart tokenizer
+	/// try to read first line and strart tokenizer
 	if(readLine() == EAR_SUCCESS) last = strtok(readBuf, Toks);
 	state = READ_STATE;
 }

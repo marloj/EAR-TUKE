@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,18 +27,19 @@ using namespace Ear;
 
 CFSTAssembly::CFSTAssembly()
 {
-	
+
 }
 
 CFSTAssembly::~CFSTAssembly()
 {
+  /// removing and deleting all transitions from the multimap
 	multimap<unsigned int, EAR_FST_Trn*>::iterator it;
-	
 	for(it = m_fst.begin(); it != m_fst.end(); it++)
 	{
 		delete it->second;
 	}
 
+  /// clearing the multimap of pointers
 	m_fst.clear();
 }
 
@@ -47,30 +48,33 @@ int CFSTAssembly::assembly(CHTKAcousticModel *_model, CDictionary *_dict)
 	m_model = _model;
 	m_dict = _dict;
 
-	//declare
+	/// get the linked list of the dictionary
 	DictItem *word = _dict->getDict();
 
 	char *modelName = NULL;
-	unsigned int iLast;	
+	unsigned int iLast;
 	HTK_Data *hmm = NULL;
 	short first = 1;
 	unsigned int iEndState = 0;
-	
+
+  /// create state manager
 	StateManager States;
 
-	//reserve number for end state ... later we will mark this state as end state
+	/// reserve number for end state ... later we will mark this state as end state
 	iEndState = States.getNewNumber();
 
+  /// go through all dictionary items/events
 	while(word!=NULL)
-	{	
-		iLast = START_STATE;
-		modelName = parse(word->models);
-		first = 1;
+	{
+		iLast = START_STATE; ///< last state used, default value the start state
+		modelName = parse(word->models); ///< get model name of the current event
+		first = 1;  ///< we need to remember when we have used the first transition for current event.
 
+    /// there is model name
 		while(modelName != NULL)
 		{
 			//get needed data
-			hmm = _model->searchForData(modelName);	
+			hmm = _model->searchForData(modelName);
 			modelName = parseNext();	//get next model end check if not end
 			if(hmm == NULL) return EAR_FAIL;			//missing model in acoustic parameters
 
@@ -78,7 +82,7 @@ int CFSTAssembly::assembly(CHTKAcousticModel *_model, CDictionary *_dict)
 			if(modelName == NULL) States.ready(iLast, iEndState, hmm->is);
 			else iLast = States.ready(iLast, UNDEF_STATE, hmm->is);
 
-			//create fst with states			
+			//create fst with states
 			if(first) {createFST(States, hmm, word); first = 0;}
 			else createFST(States, hmm, NULL);
 		}
@@ -89,7 +93,7 @@ int CFSTAssembly::assembly(CHTKAcousticModel *_model, CDictionary *_dict)
 
 	//mark end state as end state ... basicaly connect end state to abstract end state
 	connect(iEndState, END_STATE, EPS_SYM, EPS_SYM, 0.0);
-	
+
 	//create loop from end state to the beginning
 	connect(iEndState, START_STATE, EPS_SYM, EPS_SYM, 0.0);
 
@@ -108,21 +112,21 @@ void CFSTAssembly::createFST(StateManager &_states, HTK_Data *_hmm, DictItem *_w
 	{
 		for(j=0; j<t->size; j++)
 		{
-			if(t->p[i][j] != LOG_ZERO) 
+			if(t->p[i][j] != LOG_ZERO)
 			{
 				item = new EAR_FST_Trn;
 				item->iStart = _states[i];
 				item->iEnd   = _states[j];
-				
+
 				if(_hmm != NULL && _hmm->s[j] != NULL) item->iIn = _hmm->s[j]->id;
 				else item->iIn = EPS_SYM;
-				
+
 				if(i == 0 && _word != NULL) item->iOut = _word->id;
 				else item->iOut = EPS_SYM;
 
 				if(i == 0 && _word != NULL) item->fWeight = t->p[i][j] + _word->prob;
 				else item->fWeight = t->p[i][j];
-				
+
 				m_fst.insert(pair<unsigned int, EAR_FST_Trn*>(item->iStart, item));
 			}
 		}
@@ -353,11 +357,11 @@ unsigned int StateManager::ready(unsigned int _start, unsigned int _last, unsign
 	{
 		if(i==0)			{StateArray[i] = _start; continue;}
 
-		if(i == _number - 1)	
+		if(i == _number - 1)
 		{
 			if(_last == UNDEF_STATE) StateArray[i] = getNewNumber();
-			else StateArray[i] = _last; 
-			continue; 
+			else StateArray[i] = _last;
+			continue;
 		}
 
 		StateArray[i] = getNewNumber();

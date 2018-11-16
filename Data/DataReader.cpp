@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -39,12 +39,15 @@ CDataHolder::CDataHolder()
 
 CDataHolder::~CDataHolder()
 {
+
+  /// releasing the dictionary
 	if(mapWords.ppszWords){
 
 		for(unsigned int i = 0; i<mapWords.iSize; i++) {  delete[] mapWords.ppszWords[i]; }
 		delete[] mapWords.ppszWords;
 	}
 
+  /// releasing the acoustic model
 	if(am.States){
 
 		for(unsigned int i = 0; i<am.iNumberOfStates; i++) {
@@ -54,7 +57,8 @@ CDataHolder::~CDataHolder()
 		delete[] am.States;
 		//delete[] am.Active;
 	}
-	
+
+  /// releasing the search network
 	if(am.Pdfs){
 		for(unsigned int i = 0; i<am.iNumberOfPdfs; i++) {
 			delete[] am.Pdfs[i].fVar;
@@ -65,6 +69,7 @@ CDataHolder::~CDataHolder()
 
 	if(fst.pNet) delete[] fst.pNet;
 
+  /// clearing the hash map of the end state mapping
 	mapStates.clear();
 }
 
@@ -77,44 +82,45 @@ unsigned int CDataHolder::load(const char *_szFileName, const char *_szIndexName
 	unsigned int i;
 	map<unsigned int, unsigned int>::iterator it;
 
-	//read index file
+	/// read dictionary from the index file
 	pf = fopen(_szIndexName, "r");
 	if(pf == NULL) return EAR_FAIL;
 
-	//scan whole file
+	/// The dictionary is just events names mapped to a number that is output from search algorithm
+  /// exp. "gunshot\t1"
+  /// get the highest number of the names in the index file, the numbers may not be continuous
+  /// meaning there can be name numbered 100 but only 2 names are present.
 	while(fscanf(pf, "%s\t%u\n", szbuf, &ubuf) == 2)
 	{if(ubuf > mapWords.iSize) mapWords.iSize = ubuf;}
-	mapWords.iSize++; //because we have words from 0 index, thus one more to add into array
+	mapWords.iSize++; ///< we have one default empty symbol that has number zero, so thus one more to add
 
-	//seek to the beginning and read all data
+  /// seek to the beginnig and now actualy read the names.
 	fseek(pf, 0, SEEK_SET);
 	mapWords.ppszWords = new char*[mapWords.iSize];
 	while(fscanf(pf, "%s\t%u\n", szbuf, &ubuf) == 2)	{mapWords.ppszWords[ubuf] = cloneString(szbuf);}
 
 	fclose(pf);
 
-	//read binary file with acoustic model and transducer
+	/// read the binary acoustic model
 	pf = NULL;
 	pf = fopen(_szFileName, "rb");
 	if(pf == NULL) return EAR_FAIL;
 
-	//am = new EAR_AM_Info;
-
+  /// read the information about acoustic model
 	if(fread(&am.iVectorSize, sizeof(unsigned short), 1, pf) != 1) return EAR_FAIL;
 	if(fread(&am.iNumberOfStates, sizeof(unsigned int), 1, pf) != 1) return EAR_FAIL;
 	if(fread(&am.iNumberOfPdfs, sizeof(unsigned int), 1, pf) != 1) return EAR_FAIL;
 	if(fread(&am.iPdfsOnState, sizeof(unsigned int), 1, pf) != 1) return EAR_FAIL;
 
+  /// allocate the PDF indexes array for states and read
 	am.States = new unsigned int*[am.iNumberOfStates];
-	//am.Active = new unsigned int*[am.iNumberOfStates];
 	for(i=0;i<am.iNumberOfStates;i++)
 	{
 		am.States[i] = new unsigned int[am.iPdfsOnState];
-		//am.Active[i] = new unsigned int[am.iPdfsOnState];
 		if(fread(am.States[i], sizeof(unsigned int), am.iPdfsOnState, pf) != am.iPdfsOnState) return EAR_FAIL;
-		//memset(am.Active[i], 0, am.iPdfsOnState * sizeof(unsigned int));
 	}
 
+  /// allocate array of PDFs definitions and read
 	am.Pdfs = new EAR_AM_Pdf[am.iNumberOfPdfs];
 	for(i=0; i<am.iNumberOfPdfs; i++)
 	{
@@ -128,7 +134,7 @@ unsigned int CDataHolder::load(const char *_szFileName, const char *_szIndexName
 		if(fread(&am.Pdfs[i].fWeight, sizeof(float), 1, pf) != 1) return EAR_FAIL;
 	}
 
-	//read fst
+	/// Read finite state transducer
 	if(fread(&fst.iSize, sizeof(unsigned int), 1, pf) != 1) return EAR_FAIL;
 	fst.pNet = new EAR_FST_Trn[fst.iSize];
 
@@ -143,7 +149,7 @@ unsigned int CDataHolder::load(const char *_szFileName, const char *_szIndexName
 
 	fclose(pf);
 
-	//reindex iEnd number to array positions
+	///reindex iEnd number to array positions
 	ubuf = 0; mapStates[ubuf] = 0;
 	for(i=0; i<fst.iSize; i++)
 	{
@@ -160,7 +166,7 @@ unsigned int CDataHolder::load(const char *_szFileName, const char *_szIndexName
 		fst.pNet[i].iEnd = it->second;
 	}
 
-	//erase mapStates map
+	///erase mapStates map
 	mapStates.clear();
 
 	return EAR_SUCCESS;

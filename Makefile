@@ -2,7 +2,7 @@ CPPFLAGS += -O6
 
 EAR_OBJS=Data/Config.o Data/Utils.o Data/DataReader.o Data/WavSource.o Data/PushSource.o Data/MicSource.o \
 Features/Coeffs.o Features/Filter.o Features/Frame.o Features/Transform.o Features/Feature.o \
-Search/AcousticScorer.o Search/Token.o Search/Search.o 
+Search/AcousticScorer.o Search/Token.o Search/Search.o
 
 COMPILE_OBJS=Data/FileIO.o Network/HTKAcousticModel.o Network/Dictionary.o Network/FSTAssembly.o
 
@@ -26,3 +26,7 @@ clean:
 	-rm *.o
 	-rm $(EAR)
 	-rm $(COMPILER)
+
+.PHONY: docs
+docs:
+	doxygen docs/doxygen.conf
