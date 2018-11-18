@@ -19,7 +19,7 @@
 
  /**
  * Dictionary implementation. This is part of the conversion tool from HTK format
- * of acoustic models to native binary and for building the finite state trasducer
+ * of acoustic models to native binary and for building the finite state transducer
  * network.
  */
 
@@ -44,7 +44,7 @@ namespace Ear
 		char *word;       ///< output event name
 		unsigned int id;  ///< id of the event
 		float prob;       ///< event probability
-		char *models;     ///< model beloning to the event
+		char *models;     ///< model belonging to the event
 		DictItem_ *next;  ///< next event (this is linked list)
 	}DictItem;
 

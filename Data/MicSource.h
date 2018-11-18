@@ -30,7 +30,7 @@
 namespace Ear
 {
   /**
-  * Simple microhone read class. This class is using internaly <i>PushSource</i> processor
+  * Simple microhone read class. This class is using internally <i>PushSource</i> processor
   * for storing the samples.
   */
 	class CMicSource : public ADataProcessor

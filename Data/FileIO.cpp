@@ -128,7 +128,7 @@ void FileIO::readyRead()
 	/// initialize read
 	last = NULL;
 
-	/// try to read first line and strart tokenizer
+	/// try to read first line and start tokenizer
 	if(readLine() == EAR_SUCCESS) last = strtok(readBuf, Toks);
 	state = READ_STATE;
 }

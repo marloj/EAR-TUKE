@@ -94,7 +94,7 @@ namespace Ear
   typedef struct
   {
     unsigned int    iStart; ///< start state number index in the array of transitions
-    unsigned int    iEnd;   ///< end state number index in the arrray of transitions
+    unsigned int    iEnd;   ///< end state number index in the array of transitions
     unsigned int    iIn;    ///< consuming (in) symbol index on the transition
     unsigned int    iOut;   ///< emiting (out) symbol index on the transition, mapping to names are in EAR::EAR_Dict
     float		fWeight;        ///< weight associated with the transition
@@ -128,7 +128,7 @@ namespace Ear
 		virtual ~CDataContainer(){ if(pfData) delete[] pfData; }
 
 	private:
-		float *pfData;			  ///< array holding data, the array is dynamicaly reallocated if needed
+		float *pfData;			  ///< array holding data, the array is dynamically reallocated if needed
 		unsigned int iSize;		///< size of the data in the array
 		unsigned int iCap;		///< size of the data that the array can hold
 		unsigned int iFreq;		///< sampling frequency of the data in the container
@@ -160,10 +160,10 @@ namespace Ear
 				if(_iSize > iSize) memset(pfData + iSize, 0, (_iSize - iSize) * sizeof(float));
 			}
 		}
-    /// Function to manualy manipulate size of the data in the container
+    /// Function to manually manipulate size of the data in the container
     /// @return reference to the size member variable to change
 		unsigned int& size(){return iSize;}
-    /// Function to manualy manipulate sampling frequency of the data in container
+    /// Function to manually manipulate sampling frequency of the data in container
     /// @return reference to the frequency member variable to change
 		unsigned int& freq(){return iFreq;}
 
@@ -256,7 +256,7 @@ namespace Ear
 	};
 
 	/**
-  * Basic class for data preprocessor, from which the front-end is made by channing them.
+  * Basic class for data preprocessor, from which the front-end is made by chaining them.
   * The processors are representing linked list of the processing of the input waveform to the feature vectors.
   */
 	class ADataProcessor
@@ -270,7 +270,7 @@ namespace Ear
 
 	public:
     /// Function providing processed data. This function may invoke the same function of previous processor to get
-    /// new data for processing. Each specific processing implentation derived from this class needs must have this function implemented.
+    /// new data for processing. Each specific processing implementation derived from this class needs must have this function implemented.
     /// @param [in, out] Container instance that will be filled with new data.
 		virtual void getData(CDataContainer &_pData) = 0;
     /// Settings previous processor instance, from which new data can be requested if needed. This function can be implemented
@@ -291,7 +291,7 @@ namespace Ear
 
 	/**
   * Auxiliary/additional processor. This class is making branching of the processing graph possible.
-  * In one case it computes additional data that holds internaly until requested by <i>getAuxData</i>.
+  * In one case it computes additional data that holds internally until requested by <i>getAuxData</i>.
   * Another function is a processor that takes output from more than two processors.
   */
 	class AAuxDataProcessor : public ADataProcessor	{
@@ -327,7 +327,7 @@ namespace Ear
 
   /**
   * Class for processors that are concatenating results of processing from two previous processors.
-  * Currently this is used after the computation of the energy, zero and delta coeficients.
+  * Currently this is used after the computation of the energy, zero and delta coefficients.
   */
 	class CConcat : public AAuxDataProcessor
 	{

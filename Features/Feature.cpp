@@ -62,10 +62,10 @@ ADataProcessor* CFeature::getSource()
 
 unsigned int CFeature::initialize(Configuration &_cfg)
 {
-  /// if the frontend was initlialized before, return fail
+  /// if the frontend was initialized before, return fail
   if(m_pLast){/*printf("FrontEnd initialized, can not initialize again\n");*/ return EAR_FAIL;}
 
-  /// helper vaeriables (remembering pointers to concatenate the results at the end of processing)
+  /// helper variables (remembering pointers to concatenate the results at the end of processing)
   ADataProcessor *tmp = NULL; ///< last created processor
   AAuxDataProcessor *energy = NULL;
   AAuxDataProcessor *c0 = NULL;

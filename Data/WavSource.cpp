@@ -60,7 +60,7 @@ unsigned int CWavSource::load(char *_szFileName)
 		fseek(pf, 4, SEEK_CUR);
 
 		fread(&iT, 2, 1, pf); if(iT != 1) {/*printf("CWavSource: This Audio File is Compressed, Compression is not Supported\n");*/ return EAR_FAIL;}
-		fread(&iT, 2, 1, pf); if(iT != 1) {/*printf("CWavSource: This Audio has more than one chanel, this is not supported\n");*/ return EAR_FAIL;}
+		fread(&iT, 2, 1, pf); if(iT != 1) {/*printf("CWavSource: This Audio has more than one channel, this is not supported\n");*/ return EAR_FAIL;}
 		fread(&m_iSmpFreq, 4, 1, pf);
 
 		fseek(pf, 6, SEEK_CUR);

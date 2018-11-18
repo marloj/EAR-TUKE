@@ -20,7 +20,7 @@
  /**
  * Reading HTK format of the acoustic model. This is part of tool for conversion HTK formatted acoustic model
  * to native binary one. This file contains parsing the text files and structure definitions. All information
- * of the acoutic model is saved in linked lists.
+ * of the acoustic model is saved in linked lists.
  */
 
 #ifndef __EAR_HTK_ACOUSTICMODEL_H_
@@ -65,7 +65,7 @@ namespace Ear
 		unsigned int id;  ///< incremental id for the states in future native array
 		unsigned int ipdfs; ///< number of states functions for current state
 		HTK_Pdf **pdfs; ///< array of the functions
-		HTK_State_ *next; ///< next state definiton (linked list)
+		HTK_State_ *next; ///< next state definition (linked list)
 	}HTK_State;
 
   /// One event model definition
@@ -159,8 +159,8 @@ namespace Ear
     /// @param [in] _x the size of the vector
     /// @return array of the values read
 		float *readVector(unsigned int _x);
-    /// Invert each value in the vector by dividing (1/x). This should be matrix invertion, but as we are using
-    /// only diagonal matrices for variance of the PDFs (thus vector representation), the invertion is easier.
+    /// Invert each value in the vector by dividing (1/x). This should be matrix inversion, but as we are using
+    /// only diagonal matrices for variance of the PDFs (thus vector representation), the inversion is easier.
     /// @param [in] the vector
     /// @param [in] _size size of the vector
 		void invert(float *_f, unsigned int _size);
@@ -202,16 +202,16 @@ namespace Ear
     /// Consume macro definiton of model
     /// @return success of the function
 		int macroModel();
-    /// Helper function for adding transition matrix into top level structure (linked lists) and incresing appropriate values
+    /// Helper function for adding transition matrix into top level structure (linked lists) and increasing appropriate values
     /// @param [in] _item matrix to add
 		void add(HTK_Trans *_item);
-    /// Helper function for adding state into top level structure (linked lists) and incresing appropriate values
+    /// Helper function for adding state into top level structure (linked lists) and increasing appropriate values
     /// @param [in] _item state to add
 		void add(HTK_State *_item);
-    /// Helper function for adding model into top level structure (linked lists) and incresing appropriate values
+    /// Helper function for adding model into top level structure (linked lists) and increasing appropriate values
     /// @param [in] _item model to add
 		void add(HTK_Data *_item);
-    /// Helper function for adding PDF into top level structure (linked lists) and incresing appropriate values
+    /// Helper function for adding PDF into top level structure (linked lists) and increasing appropriate values
     /// @param [in] _item PDF to add
 		void add(HTK_Pdf *_item);
 	};

@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,24 +46,36 @@ void CSearch::changePenalty(float _fPenalty)
 
 unsigned int CSearch::initialize(EAR_FST_Net *_pNet, CAcousticScorer *_pScorer ,float _fWordInsPenalty)
 {
+	/// check if the network is there.
 	if(!_pNet) return EAR_FAIL; m_pNet = _pNet;
+	/// set the penalty
 	m_fPenalty = _fWordInsPenalty;
+	/// set the scorer instance
 	m_pScorer = _pScorer;
 
-    //find end state number
-    m_iEndState = 0;
+  /// search for maximum number used for state
+	/// this part creates virtual end state that all the end states are connected to.
+	/// It is esier to look after one end state as to taking care of numerous end states.
+  m_iEndState = 0;
 	for(unsigned int i=0; i<m_pNet->iSize;i++) if(m_pNet->pNet[i].iStart > m_iEndState) m_iEndState = m_pNet->pNet[i].iStart;
-	m_iEndState++; m_iStates = m_iEndState + 1;
+	m_iEndState++;	///< use the next availabe state number
+	m_iStates = m_iEndState + 1;	///< number of states in the network including zero state that is always initial state of the network
 
-	//create pool of tokens for decoding
+	/// create pool of tokens. Take number of states in search network times 10 number of tokens.
+	/// This needs to be optimized for larger networks, but for events detection it is not crucial
+	/// as the network tends to be really small.
 	m_pTokens = new CTokenPool(10 * m_pNet->iSize);
 
-    //prepare viterbi stack
-    m_iSrc = 0; m_iDst = m_iStates;
+  /// Prepare viterbi decoding stack. This stack will hold current tokens and token in previous time.
+	/// This is one array divided in half to represent previous time and current time tokens respectively.
+	/// Those halves change place when new input feature vector is consumed.
+  m_iSrc = 0; m_iDst = m_iStates;
+	/// allocate two stacks
 	m_ppStack = new CToken*[2 * m_iStates];
+	/// reset them
 	memset(m_ppStack, 0, 2 * m_iStates * sizeof(CToken*));
 
-    //prepare rest of the decoding process
+  /// prepare the decoding process
 	reset();
 
 	return EAR_SUCCESS;
@@ -71,6 +83,7 @@ unsigned int CSearch::initialize(EAR_FST_Net *_pNet, CAcousticScorer *_pScorer ,
 
 void CSearch::reset()
 {
+	/// remove all tokens from the stacks
 	unsigned int i=0; CToken *token = NULL;
 	for(i=0;i<m_iStates;i++)
 	{
@@ -78,28 +91,44 @@ void CSearch::reset()
 		token = cur(i);  if(token) {m_pTokens->ret(token);}
 	}
 
+	/// reset stacks
 	memset(m_ppStack, 0, 2 * m_iStates * sizeof(CToken*));
-	token = m_pTokens->add(NULL); insert(token, START_STATE); token->iSym = EPS_SYM;
+
+	/// create/get from the pool new token
+	token = m_pTokens->add(NULL);
+	/// insert it to the start state of the network
+	insert(token, START_STATE);
+	/// reset the symbol of the token
+	token->iSym = EPS_SYM;
+	/// propagate the token through empty input symbols transitions as they are not consuming input feature vectors when crossing them.
 	propagateEmpty(token);
 }
 
 unsigned int CSearch::process(CDataContainer &_pData, int64_t _iIndex)
 {
-	CToken *token = NULL; unsigned int i;
+	CToken *token = NULL;
+	unsigned int i;
 	int ret = 0;
 
-    if(!_pData.size()){ return EAR_FAIL; }
+	/// no vector available return fail
+  if(!_pData.size()){ return EAR_FAIL; }
 
+	/// set new feature vector to the scorer
 	ret = m_pScorer->set(&_pData); m_iIndex = _iIndex;
+	/// the scorer reported wrong feature vector return fail
 	if(ret == EAR_FAIL){ return EAR_FAIL; }
 
+	/// switch the stacks
 	nextTime();
 
-    for(i=0;i<m_iStates;i++)
-    {
-        token = prev(i);
-        if(token){ if(token->iPos != END_STATE) propagateFull(token); m_pTokens->ret(token); }
-    }
+	/// go through all tokens from previous time, if there is token in the state, propagate it to the next transitions consuming input symbols.
+	/// return the old token from the stack to the pool as the new tokens are copies. The old token will be marked for deletion,
+	/// thus not removed to the pool if there are references to it from another tokens.
+  for(i=0;i<m_iStates;i++) ///< we have stack of the tokens equal to the number of states, so go though all state numbers.
+  {
+      token = prev(i);
+      if(token){ if(token->iPos != END_STATE) propagateFull(token); m_pTokens->ret(token); }
+  }
 
 	return EAR_SUCCESS;
 }
@@ -212,6 +241,7 @@ void CSearch::propagateFull(CToken *_token)
 
 void CSearch::insert(CToken *_token, unsigned int _iState)
 {
+	///
 	if(_iState >= m_iStates){m_pTokens->ret(_token); return;}
 
 	_iState += m_iDst;
@@ -272,13 +302,13 @@ void CSearch::getResults(CResults &_results)
     //check if decision condition is met
     if(pToken == NULL || pToken->pPrev == NULL) return;
 
-    CResult newResult; 
+    CResult newResult;
 	//int64_t iEndIndex = pToken->iIndex;
 
     //go through all tokens
     while(pToken->pPrev)
 	{
-          
+
 		newResult.iRevIndex = pToken->pPrev->iIndex;
 		newResult.iDur      = pToken->iIndex - pToken->pPrev->iIndex;
 		newResult.iId       = pToken->pPrev->iSym;

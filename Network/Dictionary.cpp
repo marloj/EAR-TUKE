@@ -52,8 +52,8 @@ int CDictionary::loadFromFile(char *_szFileName)
 {
 	char *buf = NULL;
 	DictItem *Item = NULL;
-	unsigned int counter = 1; ///< 0 is reserved for empty words (initlizing id count)
-	map<char*, unsigned int, cmp_str> mapWord2Id;  ///< maping words to indexes
+	unsigned int counter = 1; ///< 0 is reserved for empty words (initializing id count)
+	map<char*, unsigned int, cmp_str> mapWord2Id;  ///< mapping words to indexes
 	map<char*, unsigned int, cmp_str>::iterator it; ///< iterator of the hash map
 
   /// opening the file using FILEIO class and tabulator as parsing token
@@ -103,7 +103,7 @@ int CDictionary::loadFromFile(char *_szFileName)
 
 void CDictionary::add(DictItem *_item)
 {
-  /// simple implementation of adding new item to the begining of the linked list
+  /// simple implementation of adding new item to the beginning of the linked list
 	if(m_Dic == NULL){m_Dic = _item;}
 	else
 	{

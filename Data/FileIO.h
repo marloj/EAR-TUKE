@@ -34,7 +34,7 @@ namespace Ear
 {
   /**
   * Convenient class for reading text files and parsing. This is mainly used for reading HTK acoustic models.
-  * This class uses <i>strtok</i>, which is not gettings along with optimization O1 through O6, so this needs to be compiled
+  * This class uses <i>strtok</i>, which is not getting along with optimization O1 through O6, so this needs to be compiled
   * with no optimization flag O0!
   */
 	class FileIO

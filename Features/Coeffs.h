@@ -31,9 +31,9 @@ namespace Ear
 {
   /**
   * Class for computing delta coefficients. Internally contains circular buffer for frames coefficients
-  * and computes delta coefs from this buffer. At the begining and end of the recording duplicates first and last
-  * frame vector respectivelly to always have the buffer full. At the beginig the buffer replicates first buffer to have
-  * the buffer half full and reads the rest frames from input. Ath the end it replicates the last frame to the other
+  * and computes delta coefs from this buffer. At the beginning and end of the recording duplicates first and last
+  * frame vector respectively to always have the buffer full. At the beginning the buffer replicates first buffer to have
+  * the buffer half full and reads the rest frames from input. At the end it replicates the last frame to the other
   * half of the buffer. This also means that this processor is delaying the output depending on the iWin parameter.
   * This also means that one call to the <i>getData</i> function triggers calling the same function of previous processor
   * multiple times.
@@ -53,7 +53,7 @@ namespace Ear
 	{
 	public:
     /**
-    * Constructes and initializes the procesor.
+    * Constructes and initializes the processor.
     * @param [in] _iWin window length of the delta coefficients computation
     * @param [in] _iOrd the order of the delta coefficients (first or second acceleration)
     */
@@ -73,7 +73,7 @@ namespace Ear
     * Getting new data from processor. This function can trigger calling <i>getData</i>
     * of previous processor multiple times depending on the window length setting. At the end
     * this function can still provide data without triggering the function for reading data.
-    * Standardly the function returns empty container if no further data are available
+    * The function returns empty container if no further data are available
     * @param [in, out] _pData Container to be filled with new data
     */
 		void getData(CDataContainer &_pData);

@@ -41,7 +41,7 @@ void CFrame::getData(CDataContainer &_pData)
 	unsigned int iLength, iShift;
 
 	/// we are getting outside of the temporary buffer, so we need new data
-  /// then we set the position to the begining of this buffer, thus zero
+  /// then we set the position to the beginning of this buffer, thus zero
 	if(m_iPos >= bf1.size()){bf1.clear(); actualize(bf1); m_iPos = 0;}
   /// we are getting empty container, return empty container
 	if(!bf1.size()){_pData.clear(); return;}

@@ -45,7 +45,7 @@ void CLifter::getData(CDataContainer &_pData)
 	actualize(_pData);
 	if(!_pData.size()) return;
 
-  /// initialize lifter coefficients if the vector size was changed and at the begining
+  /// initialize lifter coefficients if the vector size was changed and at the beginning
 	if(m_iSize != _pData.size()) {initLifter(_pData.size());}
 
 	//x = EAR_PI/m_fFactor; y = m_fFactor / 2.0;
@@ -117,7 +117,7 @@ void CMelBank::getData(CDataContainer &_pData)
 		{
       /// if this is not last filter, we compute the increasing part of the triangle filter
 			if(f(i) < f.chans()) {_pData[f(i)]	   += m_tmp[i] * f[i];}
-      /// if this is also not first filter, we compute the descreasing part of the triangle and
+      /// if this is also not first filter, we compute the decreasing part of the triangle and
       /// add this value to the previous coefficient where it belongs to.
 			if(f(i) > 0)		 {_pData[f(i) - 1] += m_tmp[i] * (1 - f[i]);}
 		}
@@ -145,7 +145,7 @@ void CMelBank::CMelFilter::init(unsigned int _iSize, float _fs)
   float mEnd;    ///< end frequency of the filters
   float mSize;   ///< size of one filter
   float x;       ///< working variable
-	float *mEdges = new float[m_iNum + 2]; ///< all edges frequencies + the begining and end
+	float *mEdges = new float[m_iNum + 2]; ///< all edges frequencies + the beginning and end
 	memset(mEdges, 0.0, (m_iNum + 2) * sizeof(float)); ///< set to zero
 
 	/// allocate the same size as the input frequency resolution
@@ -294,8 +294,8 @@ void CCMN::getData(CDataContainer &_pData)
       if(!m_pBuffer[m_iWrite]->size()) {_pData.size() = 0; return;}
       m_pMean->reserve(m_pBuffer[m_iWrite]->size());
 
-      /// compute the mean (actualy only add the vectors together now and divide by number of the vectors in buffer later)
-      /// Using this method we can substract the vector that is about to be removed from buffer and add new one, instead
+      /// compute the mean (actually only add the vectors together now and divide by number of the vectors in buffer later)
+      /// Using this method we can subtract the vector that is about to be removed from buffer and add new one, instead
       /// of computing the mean from whole buffer for each input vector
       for(j=0; j<m_pBuffer[m_iWrite]->size(); j++)
       {
@@ -308,7 +308,7 @@ void CCMN::getData(CDataContainer &_pData)
 	}
 
   /// we need to push into buffer new vector
-  /// this happends when the read pointer reaches half of the window from the begining
+  /// this happends when the read pointer reaches half of the window from the beginning
 	if(m_bInit && m_bDel)
 	{
 	  /// go to next write position

@@ -30,7 +30,7 @@
 namespace Ear
 {
   /**
-  * The PushSource is circular buffer. Normaly the design of the preprocessing processors
+  * The PushSource is circular buffer. Normally the design of the preprocessing processors
   * is to request data from previous one. In some cases, like reading from microphone, we need
   * to have a buffer in between while the microphone library is pushing data to us not waiting for us to read them
   * Circular buffer is using floats data type.
@@ -49,12 +49,12 @@ namespace Ear
     unsigned int m_iRead, m_iWrite, m_iSize; ///< Read, Write cursors and Size of the allocated buffer.
 
 	private:
-		unsigned int m_iReadLength, m_iFreq;  ///< Remembering the langth of the data to read and sampling frequency
+		unsigned int m_iReadLength, m_iFreq;  ///< Remembering the length of the data to read and sampling frequency
 		bool m_bEndOfStream;  ///< Inication of the end of stream (external source is settings this when no more data will be available so we can pass this on.)
 
 	public:
     /// Function for pushing data to the circular buffer. The buffer can overflow if pushed data has larger size as free space available.
-    /// this case only data that are fitting into free space are inserted, the other discarted.
+    /// this case only data that are fitting into free space are inserted, the other discarded.
     /// @param [in] _pfData data to push in.
     /// @param [in] _iSize size of the data to push in.
     /// @return success of the pushed data into buffer (EAR_FAIL) in case of overflowing the buffer.

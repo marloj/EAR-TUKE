@@ -54,7 +54,7 @@ namespace Ear
     * 5. Array of indexes of PDFs - Number of PDFs * unsigned 4 bytes
     * 6. PDF (variance, mean, gconst, weight) - Number of PDFs * 4 * 4 bytes (float)
     * 7. FST size - number of transitions in search network - unsigned 5 bytes
-    * 8. FST (start, end, in symbol, out symbol, weight) - FST size * ( 4 * unsigned 4 bytes, 4 bytes (float)) 
+    * 8. FST (start, end, in symbol, out symbol, weight) - FST size * ( 4 * unsigned 4 bytes, 4 bytes (float))
     * @param [in] _szFileName name of the file to read
     * @param [in] _szIndexName name of the index file to read (the dictionary)
     * @return status of the loading EAR_SUCCESS or EAR_FAIL
@@ -75,10 +75,10 @@ namespace Ear
 		EAR_FST_Net fst;  ///< read finite state transducer
 		EAR_Dict mapWords;///< read dictionary
 
-    /// Originaly the network consists from states that are numbered, so transition is defined
-    /// by two states, one starting point and one ending point. We are remembring the transitions
+    /// Originally the network consists from states that are numbered, so transition is defined
+    /// by two states, one starting point and one ending point. We are remembering the transitions
     /// in one continuous array as a list. For better performance we will re-map the end state
-    /// numbers to indexes of the array. Each index is representing the begining of the transition list
+    /// numbers to indexes of the array. Each index is representing the beginning of the transition list
     /// for the desired state by using this temporary hash map.
     std::map<unsigned int, unsigned int> mapStates;
 	};

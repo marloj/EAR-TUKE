@@ -64,7 +64,7 @@ namespace Ear
   * format with all GMM specifications. For the proper work of the detection system the binary
   * format is mandatory.
   * FST is comprised from states and transitions between them. The transitions are created from the global
-  * dictionary file and from acoustic model transition matrixes between individual states of event's models
+  * dictionary file and from acoustic model transition matrices between individual states of event's models
   * Thus, the transition can hold probability that is result from the event's probability and transition probability
   * in the acoutic model.
   */

@@ -18,10 +18,10 @@
  */
 
  /**
- * This file containes filters implementations:
+ * This file contains filters implementations:
  * Lifter: filter in the cepstral domain
  * Mel-Bank: Mel filter frequency bank
- * Preemphasis: To emphasise higher frequencies on input
+ * Preemphasis: To emphasize higher frequencies on input
  * Hamming: To filter the signal before Fourier transform
  * CMN: Ceptral mean normalization of the cepstral coefficients
  */
@@ -110,7 +110,7 @@ namespace Ear
 			unsigned int size(){return m_iSize;}
       /// @return number of channels (filters)
       unsigned int chans(){return m_iNum;}
-      /// operator for gettings the number of filter
+      /// operator for getting the number of filter
       /// @return number of coefficient that the filter belongs to
 			short operator()(unsigned int _iI){return iI[_iI];}
       /// operator for getting the value of the filter
@@ -141,7 +141,7 @@ namespace Ear
 	};
 
   /**
-  * Preemphasis computation to emphasise higher frequencies.
+  * Preemphasis computation to emphasize higher frequencies.
   */
 	class CPreem : public ADataProcessor
 	{
@@ -188,10 +188,10 @@ namespace Ear
   /**
   * Compute and apply cepstral mean normalization using floating window. Also remember last
   * computed mean of the cepstral coefficients. Contains buffer, that hols all vectors for the window,
-  * from which the mean is computed. In this buffer always the older one vector is rewriten with the
-  * new one getting new mean computed. The computed mean is then substracted from the input features.
+  * from which the mean is computed. In this buffer always the older one vector is rewritten with the
+  * new one getting new mean computed. The computed mean is then subtracted from the input features.
   * The mean from vectors in the first half of the buffer the CMN computed from the buffer is used.
-  * For the next vectors the buffer is updated. At the begining the buffer is filled with vectors,
+  * For the next vectors the buffer is updated. At the beginning the buffer is filled with vectors,
   * meaning that it will call <i>getData</i> of previous processor multiple times depending on the
   * window length.
   */
@@ -204,7 +204,7 @@ namespace Ear
 		virtual ~CCMN();
 
 	private:
-		CDataContainer **m_pBuffer; ///< Container array buffer from which the mean is computed, always the older one is rewriten with new one
+		CDataContainer **m_pBuffer; ///< Container array buffer from which the mean is computed, always the older one is rewritten with new one
 		CDataContainer *m_pMean; ///< Computed mean from the buffer
 		unsigned int m_iWin; ///< remembering the size of the window
     unsigned int m_iFrames; ///< Not currently used

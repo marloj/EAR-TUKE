@@ -30,7 +30,7 @@ namespace Ear
 {
   /**
   * Fast Fourier Implementation. Implementation is using real coefficients as complex
-  * and last stage to form the complex output then compute the modul of them.
+  * and last stage to form the complex output then compute the modulo of them.
   */
 	class CFourier : public ADataProcessor
 	{
@@ -51,7 +51,7 @@ namespace Ear
 
   /**
   * Discrete cosine transform for getting output cepstral coefficients.
-  * The class is holding internaly the tranform matrix that is precomputed.
+  * The class is holding internally the transform matrix that is precomputed.
   * The output is then computed by simple vector matrix multiplication.
   */
 	class CDct : public ADataProcessor

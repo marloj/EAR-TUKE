@@ -72,7 +72,7 @@ void CDelta::getData(CDataContainer &_pData)
 	}
 
   /// if we have not received data and we have the buffer full
-  /// replicate the last buffer at most the number of added dummy vector at the begining
+  /// replicate the last buffer at most the number of added dummy vector at the beginning
 	if(!m_pBuffer[0]->size())
 	{
 		m_pBuffer[0]->copy(m_pBuffer[1]);

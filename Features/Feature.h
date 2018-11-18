@@ -31,7 +31,7 @@ namespace Ear
 {
   /**
   * Top level signal preprocessing class, computing features to enter the recognition/detection
-  * proces. This class is capable to create frontends with MFCC, MELSPEC and FBANK features.
+  * process. This class is capable to create frontends with MFCC, MELSPEC and FBANK features.
   */
 	class CFeature : public ADataProcessor
 	{
@@ -62,15 +62,15 @@ namespace Ear
       public:
           float fLength_ms; ///< window length
           float fShift_ms; ///< window shift
-          float fPreem; ///< preemphasis coefficent
-          float fHam; ///< hamming window coefficent
+          float fPreem; ///< preemphasis coefficient
+          float fHam; ///< hamming window coefficient
           unsigned int iLoFreq_hz;  ///< low frequency limit for Mel-Bank filter
           unsigned int iHiFreq_hz; ///< hi frequency limit for Mel-Bank filter
           unsigned int iMel; ///< Number of Mel-Bank filters
           unsigned int iCep; ///< Number of cepstral coefficients after cosine transform
           unsigned int iLift; ///< filter factor in cepstral domain (lifter)
           unsigned int iAccWin; ///< Acceleration (delta order 2) coefficients window
-          unsigned int iDelWin; ///< delta order 1 coefficent window
+          unsigned int iDelWin; ///< delta order 1 coefficient window
           unsigned int iCMNWin; ///< Cepstral mean normalization window length
           bool bRawE; ///< compute the energy before hamming window and preemphasis
           bool bC0; ///< compute the zero MFCC

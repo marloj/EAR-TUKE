@@ -66,7 +66,7 @@ void CFourier::getData(CDataContainer &_pData)
 		}
 
 		k = m_iFFT;
-		while(j >= k){ j -= k; k /= 2; }  ///< finding the bit-reversend position
+		while(j >= k){ j -= k; k /= 2; }  ///< finding the bit-reversed position
 		j += k;
 	}
 
