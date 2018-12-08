@@ -54,7 +54,7 @@
 #define EPS_SYM	0
 /// as the log(0) is -infinity, we define it as very low number
 #define	LOG_ZERO	-1000000
-/// generaly define none as maximum integer number
+/// generally define none as maximum integer number
 #define NONE UINT_MAX
 
 /// success constant definition used as return value from funtions
@@ -64,15 +64,17 @@
 
 namespace Ear
 {
-  /// defining the structure of the multidimensional Gauss Probability Density function
-  /// for the acoustic model
+  /**
+  * defining the structure of the multidimensional Gauss Probability Density function
+  * for the acoustic model
+  */
   typedef struct
   {
       float           *fVar;    ///< variance of the PDF
       float           *fMean;   ///< mean of the PDF
       float           fgconst;  ///< precomputed gcons value of the PDF
       float           fWeight;  ///< weight of the PDF among others PDF for the same state in the model
-  } EAR_AM_Pdf;
+  }EAR_AM_Pdf;
 
   /// defining top structure of the acoustic model. We do not need the names of the models here, because the FST
   /// refers to the states on its transitions by number in the <i>States</i> array.
