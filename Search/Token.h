@@ -45,7 +45,7 @@ namespace Ear
         ~CToken(){}
 
     public:
-        unsigned int iPos;    ///< position of the token in the search network (state number)
+        unsigned int iPos;    ///< position of the token in the search network (index in the array of transitions marking the beginning of the transitions for particular state.)
         unsigned int iSym;  ///< consumed output symbol from the search network transition
         unsigned int iUsage; ///< number of references to this token by another tokens. If this drops to zero, the token is removed from the memory
         CToken *pPrev;  ///< reference pointer to the previous non-empty (containing symbol) token
