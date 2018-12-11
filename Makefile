@@ -10,10 +10,12 @@ LD_LIBRARY=-lportaudio
 
 EAR=Ear
 COMPILER=Compile
+FRONTEND=Frontend
 
-all: $(EAR_OBJS) $(COMPILE_OBJS) Ear.o Compile.o
+all: $(EAR_OBJS) $(COMPILE_OBJS) Ear.o Compile.o Frontend.o
 	g++ -O6 $(EAR_OBJS) Ear.o $(LD_LIBRARY) -o $(EAR)
 	g++ -O6 $(EAR_OBJS) $(COMPILE_OBJS) Compile.o $(LD_LIBRARY) -o $(COMPILER)
+	g++ -O6 $(EAR_OBJS) Frontend.o $(LD_LIBRARY) -o $(FRONTEND)
 
 Data/FileIO.o : Data/FileIO.cpp
 	g++ -o $@ -c $<
@@ -26,6 +28,7 @@ clean:
 	-rm *.o
 	-rm $(EAR)
 	-rm $(COMPILER)
+	-rm $(FRONTEND)
 
 .PHONY: docs
 docs:
