@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
 
 	//initilize the header
 	union_header.header.nSamples = 0;
-	union_header.header.sampPeriod = fea_cfg.fShift_ms * 100000;
+	union_header.header.sampPeriod = fea_cfg.fShift_ms * 10000;
 	if (fea_cfg.iType == CFeature::Configuration::MFCC) union_header.header.parmKind = 6;
 	if (fea_cfg.iType == CFeature::Configuration::FBANK) union_header.header.parmKind = 7;
 	if (fea_cfg.iType == CFeature::Configuration::MELSPEC) union_header.header.parmKind = 8;
