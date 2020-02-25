@@ -18,9 +18,9 @@
  */
 
 #include <string.h>
-
 #include "Config.h"
 #include "Utils.h"
+#include <iostream>
 
 using namespace Ear;
 using namespace std;
@@ -43,14 +43,13 @@ unsigned int CConfig::load(const char *szFileName)
     int i = 0;
 
     pf = fopen(szFileName, "r");
-    if(pf == NULL) return EAR_FAIL;
+    if (pf == NULL) return EAR_FAIL;
 
-    while(fgets(szLine, 500, pf) != NULL)
-    {
-		if(szLine[0] == '#') continue;
+    while (fgets(szLine, 500, pf) != NULL) {
+        if (szLine[0] == '#') continue;
 
         i = sscanf(szLine, "%s\t%s", szKey, szValue);
-        if(i != 2) continue;
+        if (i != 2) continue;
 
         m_mapConfig[szKey] = szValue;
     }
@@ -62,12 +61,9 @@ unsigned int CConfig::load(const char *szFileName)
 void CConfig::print()
 {
     map<string, string>::iterator it;
-    printf("==============================================\n");
-
-    for(it = m_mapConfig.begin(); it != m_mapConfig.end(); it++)
-        printf("%s\t\t%s\n", it->first.c_str(), it->second.c_str());
-
-    printf("==============================================\n");
+    for (it = m_mapConfig.begin(); it != m_mapConfig.end(); it++) {
+        std::cout << it->first << "=" << it->second << std::endl;
+    }
 }
 
 const char *CConfig::findProperty(const char* _szPropertyName)
@@ -76,7 +72,7 @@ const char *CConfig::findProperty(const char* _szPropertyName)
     string name(_szPropertyName);
     it = m_mapConfig.find(name);
 
-    if(it != m_mapConfig.end()) return it->second.c_str();
+    if (it != m_mapConfig.end()) return it->second.c_str();
 
     return NULL;
 }
@@ -86,27 +82,27 @@ void CConfig::lookUpInt(const char *szPropertyName, int *_Value, int _Default)
     const char *szValue = findProperty(szPropertyName);
     *_Value = _Default;
 
-    if(szValue != NULL) sscanf(szValue, "%d", _Value);
+    if (szValue != NULL) sscanf(szValue, "%d", _Value);
 }
 
-void CConfig::lookUpUInt  (const char *szPropertyName, unsigned int *_Value, unsigned int _Default)
+void CConfig::lookUpUInt(const char *szPropertyName, unsigned int *_Value, unsigned int _Default)
 {
     const char *szValue;
 
     *_Value = _Default;
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL) sscanf(szValue, "%u", _Value);
+    if (szValue != NULL) sscanf(szValue, "%u", _Value);
 }
 
-void CConfig::lookUpFloat (const char *szPropertyName, float *_Value, float _Default)
+void CConfig::lookUpFloat(const char *szPropertyName, float *_Value, float _Default)
 {
     const char *szValue;
 
     *_Value = _Default;
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL) sscanf(szValue, "%f", _Value);
+    if (szValue != NULL) sscanf(szValue, "%f", _Value);
 }
 
 void CConfig::lookUpDouble(const char *szPropertyName, double *_Value, double _Default)
@@ -116,7 +112,7 @@ void CConfig::lookUpDouble(const char *szPropertyName, double *_Value, double _D
     *_Value = _Default;
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL) sscanf(szValue, "%lf", _Value);
+    if (szValue != NULL) sscanf(szValue, "%lf", _Value);
 }
 
 void CConfig::lookUpString(const char *szPropertyName, char *_Value, const char *_Default)
@@ -126,7 +122,7 @@ void CConfig::lookUpString(const char *szPropertyName, char *_Value, const char 
     strcpy(_Value, _Default);
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL) sscanf(szValue, "%s", _Value);
+    if (szValue != NULL) sscanf(szValue, "%s", _Value);
 }
 
 void CConfig::lookUpShort(const char *szPropertyName, short *_Value, short _Default)
@@ -136,7 +132,7 @@ void CConfig::lookUpShort(const char *szPropertyName, short *_Value, short _Defa
     *_Value = _Default;
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL) sscanf(szValue, "%hd", _Value);
+    if (szValue != NULL) sscanf(szValue, "%hd", _Value);
 }
 
 void CConfig::lookUpBool(const char *szPropertyName, bool *_Value, bool _Default)
@@ -146,9 +142,8 @@ void CConfig::lookUpBool(const char *szPropertyName, bool *_Value, bool _Default
     *_Value = _Default;
 
     szValue = findProperty(szPropertyName);
-    if(szValue != NULL)
-    {
-        if(strcmp("T", szValue) == 0) *_Value = true;
-        if(strcmp("F", szValue) == 0) *_Value = false;
+    if (szValue != NULL) {
+        if (strcmp("T", szValue) == 0) *_Value = true;
+        if (strcmp("F", szValue) == 0) *_Value = false;
     }
 }

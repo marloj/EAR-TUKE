@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="Data">
+        <in>Config.cpp</in>
+        <in>Config.h</in>
+        <in>Data.h</in>
+        <in>DataReader.cpp</in>
+        <in>DataReader.h</in>
+        <in>FileIO.cpp</in>
+        <in>FileIO.h</in>
+        <in>MicSource.cpp</in>
+        <in>MicSource.h</in>
+        <in>PushSource.cpp</in>
+        <in>PushSource.h</in>
+        <in>Utils.cpp</in>
+        <in>Utils.h</in>
+        <in>WavSource.cpp</in>
+        <in>WavSource.h</in>
+      </df>
+      <df name="docs">
+        <df name="images">
+        </df>
+      </df>
+      <df name="Example">
+        <df name="melspec_1state_256pdf">
+        </df>
+      </df>
+      <df name="Features">
+        <in>Coeffs.cpp</in>
+        <in>Coeffs.h</in>
+        <in>Feature.cpp</in>
+        <in>Feature.h</in>
+        <in>Filter.cpp</in>
+        <in>Filter.h</in>
+        <in>Frame.cpp</in>
+        <in>Frame.h</in>
+        <in>Transform.cpp</in>
+        <in>Transform.h</in>
+      </df>
+      <df name="Network">
+        <in>Dictionary.cpp</in>
+        <in>Dictionary.h</in>
+        <in>FSTAssembly.cpp</in>
+        <in>FSTAssembly.h</in>
+        <in>HTKAcousticModel.cpp</in>
+        <in>HTKAcousticModel.h</in>
+      </df>
+      <df name="Search">
+        <in>AcousticScorer.cpp</in>
+        <in>AcousticScorer.h</in>
+        <in>Search.cpp</in>
+        <in>Search.h</in>
+        <in>Token.cpp</in>
+        <in>Token.h</in>
+      </df>
+      <in>Compile.cpp</in>
+      <in>Ear.cpp</in>
+      <in>Frontend.cpp</in>
+      <in>go.mod</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

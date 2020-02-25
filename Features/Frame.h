@@ -17,7 +17,7 @@
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
 
- /**
+/**
  * Each processing of the input signal is based on the dividing the input samples
  * into frames that overlap. This file contains processor for this purpose
  */
@@ -27,31 +27,30 @@
 
 #include "../Data/Data.h"
 
-namespace Ear
-{
-  /**
-  * Class for dividing the input signal to specific length and overlap. The class is using
-  * two temporary buffers. buf1 to read new data from source, as we do not know how many it will be
-  * and buf2 for remembering last frame, to copy the overlap into next one.
-  */
-	class CFrame : public ADataProcessor
-	{
-	public:
-    /// Initialize processor.
-    /// @param [in] _fLength length of window in milliseconds
-    /// @param [in] _fShift shift of the window in milliseconds
-		CFrame(float _fLength, float _fShift);
-		virtual ~CFrame();
+namespace Ear {
 
-	private:
-		float m_fLength; ///< length of the window
-    float m_fShift; ///< shift of the window
-		unsigned int m_iPos; ///< position in the read input stream
-		CDataContainer bf1, bf2; ///< two temporary containers
+    /**
+     * Class for dividing the input signal to specific length and overlap. The class is using
+     * two temporary buffers. buf1 to read new data from source, as we do not know how many it will be
+     * and buf2 for remembering last frame, to copy the overlap into next one.
+     */
+    class CFrame : public ADataProcessor {
+    public:
+        /// Initialize processor.
+        /// @param [in] _fLength length of window in milliseconds
+        /// @param [in] _fShift shift of the window in milliseconds
+        CFrame(float _fLength, float _fShift);
+        virtual ~CFrame();
 
-	public:
-		void getData(CDataContainer &_pData);
-	};
+    private:
+        float m_fLength; ///< length of the window
+        float m_fShift; ///< shift of the window
+        unsigned int m_iPos; ///< position in the read input stream
+        CDataContainer bf1, bf2; ///< two temporary containers
+
+    public:
+        void getData(CDataContainer &_pData);
+    };
 }
 
 #endif

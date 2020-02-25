@@ -17,7 +17,7 @@
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
 
- /**
+/**
  * Dictionary implementation. This is part of the conversion tool from HTK format
  * of acoustic models to native binary and for building the finite state transducer
  * network.
@@ -29,54 +29,52 @@
 #include <string.h>
 #include "../Data/FileIO.h"
 
-namespace Ear
-{
-  /**
-  * Structure of one word (event name) in dictionary. This is dictionary definition is separate
-  * from the one used in event detection. This implementation is used for reading the dictionary
-  * for conversion to the finite-state transducer network.
-  * This is part of the conversion tool from HTK format to native binary EAR-TUKE format
-  * The dictionary is in following format:
-  * <output event name> <event probability> <model name>
-  */
-  typedef struct DictItem_
-	{
-		char *word;       ///< output event name
-		unsigned int id;  ///< id of the event
-		float prob;       ///< event probability
-		char *models;     ///< model belonging to the event
-		DictItem_ *next;  ///< next event (this is linked list)
-	}DictItem;
+namespace Ear {
 
-	class CDictionary
-	{
-	public:
-		CDictionary();
-		~CDictionary();
-    /// Loading dictionary from file
-    /// @param [in] _szFileName dictionary to load
-		int loadFromFile(char *_szFileName);
-    /// Return pointer to the first item in the linked list of events
-		DictItem *getDict();
+    /**
+     * Structure of one word (event name) in dictionary. This is dictionary definition is separate
+     * from the one used in event detection. This implementation is used for reading the dictionary
+     * for conversion to the finite-state transducer network.
+     * This is part of the conversion tool from HTK format to native binary EAR-TUKE format
+     * The dictionary is in following format:
+     * <output event name> <event probability> <model name>
+     */
+    typedef struct DictItem_ {
+        char *word; ///< output event name
+        unsigned int id; ///< id of the event
+        float prob; ///< event probability
+        char *models; ///< model belonging to the event
+        DictItem_ *next; ///< next event (this is linked list)
+    } DictItem;
 
-	private:
-    /// Adding new item to the linked list of events
-    /// @param [in] _item new item to add
-		void add(DictItem *_item);
+    class CDictionary {
+    public:
+        CDictionary();
+        ~CDictionary();
+        /// Loading dictionary from file
+        /// @param [in] _szFileName dictionary to load
+        int loadFromFile(char *_szFileName);
+        /// Return pointer to the first item in the linked list of events
+        DictItem *getDict();
 
-    /// operator for searching in the map structure as we will use array of chars later
-		struct cmp_str
-		{
-		 	bool operator()(char const *a, char const *b) const
-		 	{
-		 		return strcmp(a, b) < 0;
-		 	}
-		};
+    private:
+        /// Adding new item to the linked list of events
+        /// @param [in] _item new item to add
+        void add(DictItem *_item);
 
-	private:
-		FileIO m_file;    ///< opened dictionary file
-		DictItem *m_Dic;  ///< events linked list
-	};
+        /// operator for searching in the map structure as we will use array of chars later
+
+        struct cmp_str {
+
+            bool operator()(char const *a, char const *b) const {
+                return strcmp(a, b) < 0;
+            }
+        };
+
+    private:
+        FileIO m_file; ///< opened dictionary file
+        DictItem *m_Dic; ///< events linked list
+    };
 }
 
 #endif

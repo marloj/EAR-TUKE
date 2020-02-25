@@ -29,42 +29,56 @@
 
 using namespace Ear;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-	CHTKAcousticModel model;
-	CDictionary dict;
-	CFSTAssembly fst;
-	int ret = 0;
+    CHTKAcousticModel model;
+    CDictionary dict;
+    CFSTAssembly fst;
+    int ret = 0;
 
-	char f[PATH_MAX], i[PATH_MAX], o[PATH_MAX], b[PATH_MAX], d[PATH_MAX];
+    char f[PATH_MAX], i[PATH_MAX], o[PATH_MAX], b[PATH_MAX], d[PATH_MAX];
 
-	if(argc < 4)
-    {
+    if (argc < 4) {
         printf("Usage: %s <htk model file> <dictionary> <output name prefix>", argv[0]);
         return 1;
     }
 
-	ret = model.loadModelFrom(argv[1]);
-	if(ret == EAR_FAIL) { fprintf(stderr, "Error reading HTK acoustic model\n"); return 1; }
+    ret = model.loadModelFrom(argv[1]);
+    if (ret == EAR_FAIL) {
+        printf("Error reading HTK acoustic model\n");
+        return 1;
+    }
 
-	ret = dict.loadFromFile(argv[2]);
-	if(ret == EAR_FAIL) { fprintf(stderr, "Error reading dictionary file\n"); return 1; }
+    ret = dict.loadFromFile(argv[2]);
+    if (ret == EAR_FAIL) {
+        printf("Error reading dictionary file\n");
+        return 1;
+    }
 
-	fst.assembly(&model, &dict);
+    fst.assembly(&model, &dict);
 
-	strcpy(f, argv[3]);	strcat(f, ".fst");
-	strcpy(i, argv[3]);	strcat(i, ".isym");
-	strcpy(o, argv[3]);	strcat(o, ".osym");
-	strcpy(b, argv[3]);	strcat(b, ".bin");
-	strcpy(d, argv[3]);	strcat(d, ".idx");
+    strcpy(f, argv[3]);
+    strcat(f, ".fst");
+    strcpy(i, argv[3]);
+    strcat(i, ".isym");
+    strcpy(o, argv[3]);
+    strcat(o, ".osym");
+    strcpy(b, argv[3]);
+    strcat(b, ".bin");
+    strcpy(d, argv[3]);
+    strcat(d, ".idx");
 
-	ret = fst.writeFST(f, i, o);
-	if(ret == EAR_FAIL){ fprintf(stderr, "Error writing output transducer\n"); return 1; }
+    ret = fst.writeFST(f, i, o);
+    if (ret == EAR_FAIL) {
+        printf("Error writing output transducer\n");
+        return 1;
+    }
 
-	ret = fst.writeBin(b, d);
-	if(ret == EAR_FAIL){ fprintf(stderr, "Error writing output binary model\n"); return 1; }
+    ret = fst.writeBin(b, d);
+    if (ret == EAR_FAIL) {
+        printf("Error writing output binary model\n");
+        return 1;
+    }
 
-	return 0;
-		
+    return 0;
 }
-

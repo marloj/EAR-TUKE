@@ -17,7 +17,7 @@
  * along with EAR-TUKE. If not, see <http://www.gnu.org/licenses/>.
  */
 
- /**
+/**
  *	This file contains acoustic scorer implementation for scoring PDFs (probabilistic density functions against input)
  * feature vectors.
  */
@@ -27,41 +27,40 @@
 
 #include "../Data/Data.h"
 
-namespace Ear
-{
-	/**
-	*	This is implementation of scoring mechanism using PDFs and input feature vectors
-	* Also includes skipping first N components of the PDFs from scoring if needed.
-	* Some results are showing that skipping the basic coefficients from scoring
-	* is increasing the accuracy of the detection and classification.
-	*/
-	class CAcousticScorer
-	{
-	public:
-		CAcousticScorer();
-		~CAcousticScorer();
+namespace Ear {
 
-	public:
-		/// Setting acoustic model that will be used for scoring purposes.
-		/// @param [in] _am acoustic model information in native format
-		/// @param [in] _iStrip_offset strip the first offset coefficients
-		void setAcousticModel(EAR_AM_Info *_am, unsigned int _iStrip_offset);
-		/// Getting the score for particular model. This function provides the scoring computation
-		/// @param [in] _Index the index of the state to score
-		/// @return total score computed using current vector and PDFs functions belogning to specified state
-		float getScore(unsigned int _Index);
-		/// Set the current feature vector that will be used for computing scores against PDFs of the states
-		/// This function also checks the size of the input feature vector and the acoustic model for compatility in size
-		/// @param [in] _vector Container containing the current input feature vector
-		/// @return success state of setting new vector for scoring
-		int set(CDataContainer *_vector);
+    /**
+     *	This is implementation of scoring mechanism using PDFs and input feature vectors
+     * Also includes skipping first N components of the PDFs from scoring if needed.
+     * Some results are showing that skipping the basic coefficients from scoring
+     * is increasing the accuracy of the detection and classification.
+     */
+    class CAcousticScorer {
+    public:
+        CAcousticScorer();
+        ~CAcousticScorer();
 
-	private:
-		EAR_AM_Info *am;	///< remembering the acoustic model pointer
-		float *scores;	///< scores already computed for particular input feature vector (caching purposes)
-		CDataContainer *vector; ///< feature vector the will be used for scoring (current set)
-		unsigned int m_iStrip_offset; ///< set offset for scoring.
-	};
+    public:
+        /// Setting acoustic model that will be used for scoring purposes.
+        /// @param [in] _am acoustic model information in native format
+        /// @param [in] _iStrip_offset strip the first offset coefficients
+        void setAcousticModel(EAR_AM_Info *_am, unsigned int _iStrip_offset);
+        /// Getting the score for particular model. This function provides the scoring computation
+        /// @param [in] _Index the index of the state to score
+        /// @return total score computed using current vector and PDFs functions belogning to specified state
+        float getScore(unsigned int _Index);
+        /// Set the current feature vector that will be used for computing scores against PDFs of the states
+        /// This function also checks the size of the input feature vector and the acoustic model for compatility in size
+        /// @param [in] _vector Container containing the current input feature vector
+        /// @return success state of setting new vector for scoring
+        int set(CDataContainer *_vector);
+
+    private:
+        EAR_AM_Info *am; ///< remembering the acoustic model pointer
+        float *scores; ///< scores already computed for particular input feature vector (caching purposes)
+        CDataContainer *vector; ///< feature vector the will be used for scoring (current set)
+        unsigned int m_iStrip_offset; ///< set offset for scoring.
+    };
 }
 
 #endif

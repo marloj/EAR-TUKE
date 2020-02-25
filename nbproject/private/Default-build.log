@@ -1,0 +1,40 @@
+g++  -O6  -c -o Data/Config.o Data/Config.cpp
+g++  -O6  -c -o Data/Utils.o Data/Utils.cpp
+g++  -O6  -c -o Data/DataReader.o Data/DataReader.cpp
+g++  -O6  -c -o Data/WavSource.o Data/WavSource.cpp
+Data/WavSource.cpp: In member function ‘unsigned int Ear::CWavSource::load(char*)’:
+Data/WavSource.cpp:71:14: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&iT, 2, 1, pf);
+         ~~~~~^~~~~~~~~~~~~~~
+Data/WavSource.cpp:76:14: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&iT, 2, 1, pf);
+         ~~~~~^~~~~~~~~~~~~~~
+Data/WavSource.cpp:81:14: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&m_iSmpFreq, 4, 1, pf);
+         ~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+Data/WavSource.cpp:85:14: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+         fread(&m_iBytesPerSmp, 2, 1, pf);
+         ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+Data/WavSource.cpp:116:10: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+     fread(m_psBuf, 1, m_iSize, pf);
+     ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+g++  -O6  -c -o Data/PushSource.o Data/PushSource.cpp
+g++  -O6  -c -o Data/MicSource.o Data/MicSource.cpp
+g++  -O6  -c -o Features/Coeffs.o Features/Coeffs.cpp
+g++  -O6  -c -o Features/Filter.o Features/Filter.cpp
+g++  -O6  -c -o Features/Frame.o Features/Frame.cpp
+g++  -O6  -c -o Features/Transform.o Features/Transform.cpp
+g++  -O6  -c -o Features/Feature.o Features/Feature.cpp
+g++  -O6  -c -o Search/AcousticScorer.o Search/AcousticScorer.cpp
+g++  -O6  -c -o Search/Token.o Search/Token.cpp
+g++  -O6  -c -o Search/Search.o Search/Search.cpp
+g++ -o Data/FileIO.o -c Data/FileIO.cpp
+g++  -O6  -c -o Network/HTKAcousticModel.o Network/HTKAcousticModel.cpp
+g++  -O6  -c -o Network/Dictionary.o Network/Dictionary.cpp
+g++  -O6  -c -o Network/FSTAssembly.o Network/FSTAssembly.cpp
+g++  -O6  -c -o Ear.o Ear.cpp
+g++  -O6  -c -o Compile.o Compile.cpp
+g++  -O6  -c -o Frontend.o Frontend.cpp
+g++ -O6 Data/Config.o Data/Utils.o Data/DataReader.o Data/WavSource.o Data/PushSource.o Data/MicSource.o Features/Coeffs.o Features/Filter.o Features/Frame.o Features/Transform.o Features/Feature.o Search/AcousticScorer.o Search/Token.o Search/Search.o Ear.o -lportaudio -o ear
+g++ -O6 Data/Config.o Data/Utils.o Data/DataReader.o Data/WavSource.o Data/PushSource.o Data/MicSource.o Features/Coeffs.o Features/Filter.o Features/Frame.o Features/Transform.o Features/Feature.o Search/AcousticScorer.o Search/Token.o Search/Search.o Data/FileIO.o Network/HTKAcousticModel.o Network/Dictionary.o Network/FSTAssembly.o Compile.o -lportaudio -o compile
+g++ -O6 Data/Config.o Data/Utils.o Data/DataReader.o Data/WavSource.o Data/PushSource.o Data/MicSource.o Features/Coeffs.o Features/Filter.o Features/Frame.o Features/Transform.o Features/Feature.o Search/AcousticScorer.o Search/Token.o Search/Search.o Frontend.o -lportaudio -o frontend

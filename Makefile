@@ -8,9 +8,9 @@ COMPILE_OBJS=Data/FileIO.o Network/HTKAcousticModel.o Network/Dictionary.o Netwo
 
 LD_LIBRARY=-lportaudio
 
-EAR=Ear
-COMPILER=Compile
-FRONTEND=Frontend
+EAR=ear
+COMPILER=compile
+FRONTEND=frontend
 
 all: $(EAR_OBJS) $(COMPILE_OBJS) Ear.o Compile.o Frontend.o
 	g++ -O6 $(EAR_OBJS) Ear.o $(LD_LIBRARY) -o $(EAR)

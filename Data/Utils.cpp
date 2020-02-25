@@ -24,28 +24,28 @@
 
 char *Ear::cloneString(char *_c)
 {
-	char *o;
-	if(_c == NULL) return NULL;
-	o = new char[strlen(_c) + 1];
-	strcpy(o, _c);
-	return o;
+    char *o;
+    if (_c == NULL) return NULL;
+    o = new char[strlen(_c) + 1];
+    strcpy(o, _c);
+    return o;
 }
 
 char *Ear::parse(char *_s)
 {
-	return strtok(_s, " ");
+    return strtok(_s, " ");
 }
 
 char *Ear::parseNext()
 {
-	return strtok(NULL, " ");
+    return strtok(NULL, " ");
 }
 
 float *Ear::cloneVector(float *_f, unsigned int _x)
 {
-	float *o = NULL;
-	if(_f == NULL) return NULL;
-	o = new float[_x];
-	memcpy(o, _f, sizeof(float) * _x);
-	return o;
+    float *o = NULL;
+    if (_f == NULL) return NULL;
+    o = new float[_x];
+    memcpy(o, _f, sizeof (float) * _x);
+    return o;
 }

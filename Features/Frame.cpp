@@ -24,11 +24,12 @@ using namespace Ear;
 
 CFrame::CFrame(float _fLength, float _fShift) : ADataProcessor()
 {
-	m_fLength = _fLength;
-	m_fShift  = _fShift;
-	m_iPos = 0;
+    m_fLength = _fLength;
+    m_fShift = _fShift;
+    m_iPos = 0;
 
-	bf1.size() = 0; bf2.size() = 0;
+    bf1.size() = 0;
+    bf2.size() = 0;
 }
 
 CFrame::~CFrame()
@@ -38,47 +39,63 @@ CFrame::~CFrame()
 
 void CFrame::getData(CDataContainer &_pData)
 {
-	unsigned int iLength, iShift;
+    unsigned int iLength, iShift;
 
-	/// we are getting outside of the temporary buffer, so we need new data
-  /// then we set the position to the beginning of this buffer, thus zero
-	if(m_iPos >= bf1.size()){bf1.clear(); actualize(bf1); m_iPos = 0;}
-  /// we are getting empty container, return empty container
-	if(!bf1.size()){_pData.clear(); return;}
+    /// we are getting outside of the temporary buffer, so we need new data
+    /// then we set the position to the beginning of this buffer, thus zero
+    if (m_iPos >= bf1.size()) {
+        bf1.clear();
+        actualize(bf1);
+        m_iPos = 0;
+    }
+    /// we are getting empty container, return empty container
+    if (!bf1.size()) {
+        _pData.clear();
+        return;
+    }
 
-	/// compute from milliseconds how many samples we need to copy
-	iLength = (unsigned int)(bf1.freq() * m_fLength * 0.001);
-	iShift  = (unsigned int)(bf1.freq() * m_fShift * 0.001);
+    /// compute from milliseconds how many samples we need to copy
+    iLength = (unsigned int) (bf1.freq() * m_fLength * 0.001);
+    iShift = (unsigned int) (bf1.freq() * m_fShift * 0.001);
 
-	/// reserve space for output frame
-	_pData.reserve(iLength); _pData.clear();
+    /// reserve space for output frame
+    _pData.reserve(iLength);
+    _pData.clear();
 
-	/// copy old data we remembered from previous frame to output
-  /// basically copy the overlap of previous frame
-	if(bf2.size()) _pData.copy(&bf2,iShift,iLength);
+    /// copy old data we remembered from previous frame to output
+    /// basically copy the overlap of previous frame
+    if (bf2.size()) _pData.copy(&bf2, iShift, iLength);
 
-	/// if more data are needed copy them from buf1 holding new data
-	while(_pData.size() != iLength)
-	{
-    /// adjust the position in the buf1 and copy data
-		m_iPos += _pData.add(&bf1,m_iPos, iLength - _pData.size());
+    /// if more data are needed copy them from buf1 holding new data
+    while (_pData.size() != iLength) {
+        /// adjust the position in the buf1 and copy data
+        m_iPos += _pData.add(&bf1, m_iPos, iLength - _pData.size());
 
-    /// not enough data, we need to get more
-		if(m_iPos >= bf1.size()){bf1.clear(); actualize(bf1); m_iPos = 0;}
+        /// not enough data, we need to get more
+        if (m_iPos >= bf1.size()) {
+            bf1.clear();
+            actualize(bf1);
+            m_iPos = 0;
+        }
 
-    /// not enough data to read from source, stop trying
-		if(!bf1.size()){break;}
-	}
+        /// not enough data to read from source, stop trying
+        if (!bf1.size()) {
+            break;
+        }
+    }
 
-	//printf("%d\n", _pData.size());
+    //printf("%d\n", _pData.size());
 
-	/// if bf1 has too low data do not create an another frame
-  /// there is only 90% of frame filled, return empty container instead
-	if(_pData.size() < iLength * 0.9){_pData.clear(); return;}
+    /// if bf1 has too low data do not create an another frame
+    /// there is only 90% of frame filled, return empty container instead
+    if (_pData.size() < iLength * 0.9) {
+        _pData.clear();
+        return;
+    }
 
-	/// set length to output data
-	_pData.size() = iLength;
+    /// set length to output data
+    _pData.size() = iLength;
 
-	/// copy the data to bf2 for remembering the overlap
-	bf2.copy(&_pData);
+    /// copy the data to bf2 for remembering the overlap
+    bf2.copy(&_pData);
 }
