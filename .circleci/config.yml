@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:16.04
+
+    steps:      
+    - run: apt-get update
+    - run: sudo apt-get -y install build-essential git 
+    - checkout
+    - run:
+          name: "Build"
+          command: |
+            make            
