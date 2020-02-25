@@ -1,4 +1,4 @@
-CPPFLAGS += -O6
+CPPFLAGS += -O6 
 
 EAR_OBJS=Data/Config.o Data/Utils.o Data/DataReader.o Data/WavSource.o Data/PushSource.o Data/MicSource.o \
 Features/Coeffs.o Features/Filter.o Features/Frame.o Features/Transform.o Features/Feature.o \

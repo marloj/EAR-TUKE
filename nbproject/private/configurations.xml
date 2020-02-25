@@ -57,6 +57,7 @@
       </df>
       <in>Compile.cpp</in>
       <in>Ear.cpp</in>
+      <in>Ear.h</in>
       <in>Frontend.cpp</in>
       <in>go.mod</in>
     </df>

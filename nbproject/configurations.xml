@@ -30,6 +30,7 @@
       </df>
       <in>Compile.cpp</in>
       <in>Ear.cpp</in>
+      <in>Ear.h</in>
       <in>Frontend.cpp</in>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -83,6 +84,8 @@
       <item path="Data/WavSource.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Ear.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Ear.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Features/Coeffs.cpp" ex="false" tool="1" flavor2="0">
       </item>
