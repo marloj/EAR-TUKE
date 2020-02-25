@@ -177,9 +177,9 @@ void App::run(const std::string& configFile)
                     continue;
                 }
                 float shift = (float) res->iDur * _featureConfig.fShift_ms / 1000;
-                auto score = res->fScore;
-                auto rms = data.rms();
-                auto model = std::string(_model.getDict()->ppszWords[res->iId]);
+                float score = res->fScore;
+                double rms = data.rms();
+                std::string model = std::string(_model.getDict()->ppszWords[res->iId]);
                 std::cout << "RESULT;" << shift << ";" << score << ";" << rms << ";" << model << ";" << std::endl;
             }
             //resetting decoder in the background hypothesis

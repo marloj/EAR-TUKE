@@ -24,10 +24,11 @@
 
 namespace Ear {
 
-    class Exception : public std::exception {
+    class Exception {
     public:
         Exception(const std::string& msg);
         const std::string& message() const;
+        
     private:
         std::string _msg;
     };
